@@ -6,8 +6,7 @@ export default class DatePicker{
     this.input_ele = ele;
     this.root = document.createElement('DIV');
     this.root.className="calendar";
-    this.root.style.top = `${this.input_ele.offsetHeight + this.input_ele.offsetTop}px`;
-    this.root.style.left = `${this.input_ele.offsetWidth + this.input_ele.offsetLeft}px`;
+
 /*     this.root.style.top = 200;
     this.root.style.left = 200; */
     this.root.hidden = true;
@@ -83,9 +82,7 @@ export default class DatePicker{
     document.addEventListener('mouseup',(e)=>{
         let container = this.root;
         if (!container.contains(e.target)) {
-            if ( this.input_ele.contains(e.target)) {
-                
-            }else{
+            if (! this.input_ele.contains(e.target)) {
                 container.hidden =  true;
             }
             
@@ -95,9 +92,12 @@ export default class DatePicker{
 
 
 
-    this.input_ele.parentElement.append(this.root);    
+    document.querySelector('body').append(this.root);  
     this.renderCalendar();
     this.input_ele.addEventListener('focus',()=>{        
+
+        this.root.style.top = `${ this.input_ele.getBoundingClientRect().y + this.input_ele.getBoundingClientRect().height}px`;
+        this.root.style.left = `${ this.input_ele.getBoundingClientRect().x + this.input_ele.getBoundingClientRect().width}px`;
         this.root.hidden = false;            
     });
 
